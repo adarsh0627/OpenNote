@@ -1,0 +1,25 @@
+export const notes = [
+  {
+    id: "note_1",
+    title: "DBMS Handwritten Notes",
+    description: "Well-structured handwritten notes for exams",
+    subject: "Computer Science",
+    price: 99,
+    thumbnail: "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F0514%2F0014%2F7144%2Fproducts%2F9789355510266_1024x.jpg%3Fv%3D1652353978&f=1&nofb=1&ipt=28c180d7ee1feb67dd5d1bb32eea679e95a8865760927664d7fd2148ac605c2b",
+    fileUrl: "",
+    sellerId: "user_1",
+    sellerName: "Adarsh",
+    createdAt: "2026-01-10",
+  },
+  {
+    id: "note_2",
+    title: "Operating System Short Notes",
+    description: "Covers all important OS topics",
+    subject: "Computer Science",
+    price: 79,
+    thumbnail: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsubstackcdn.com%2Fimage%2Ffetch%2Ff_auto%2Cq_auto%3Agood%2Cfl_progressive%3Asteep%2Fhttps%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3cc99ea2-e8b0-47a8-8bd5-f32e1b795180_500x617.jpeg&f=1&nofb=1&ipt=c8c7be2d22a822a71594aa5f508b7103186bb0523c3d109ee366635888a4c44c",
+    sellerId: "user_2",
+    sellerName: "Rohit",
+    createdAt: "2026-01-12",
+  },
+];
