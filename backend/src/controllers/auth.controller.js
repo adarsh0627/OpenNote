@@ -11,6 +11,7 @@ exports.signUpController = async (req, res) => {
         id: user._id,
         userName: user.userName,
         email: user.email,
+        education:user.education
       },
     });
   } catch (error) {
