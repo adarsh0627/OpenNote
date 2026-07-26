@@ -7,14 +7,12 @@ const API = axios.create({
   withCredentials: false,
 });
 
-// Attach access token to every request
 API.interceptors.request.use((req) => {
   const token = localStorage.getItem("accessToken");
   if (token) req.headers.Authorization = `Bearer ${token}`;
   return req;
 });
 
-// Auto-refresh on 401 TOKEN_EXPIRED
 let isRefreshing = false;
 let failedQueue = [];
 

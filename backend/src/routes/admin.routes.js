@@ -13,7 +13,6 @@ const {
   rejectRedemption,
 } = require("../controllers/admin.controller");
 
-// All admin routes require auth + admin check
 router.use(authMiddleware, adminMiddleware);
 
 router.get("/stats", getStats);

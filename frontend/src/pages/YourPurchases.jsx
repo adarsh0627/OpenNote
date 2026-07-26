@@ -9,7 +9,7 @@ const YourPurchases = () => {
   useEffect(() => {
     const fetchPurchases = async () => {
       const data = await getMyPurchases();
-      setPurchases(data.purchases); // ✅ FIX
+      setPurchases(data.purchases); 
     };
     fetchPurchases();
   }, []);
@@ -30,7 +30,7 @@ const YourPurchases = () => {
             {purchases.map((purchase) => (
               <PurchasedNoteCard
                 key={purchase._id}
-                note={purchase.note} // ✅ important
+                note={purchase.note} 
               />
             ))}
           </div>

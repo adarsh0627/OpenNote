@@ -5,7 +5,6 @@ const RedemptionRequest = require("../models/redemption.model");
 const WalletTransaction = require("../models/walletTransaction.model");
 const Notification = require("../models/notification.model");
 
-// ── Stats overview ────────────────────────────────────────────────────────────
 exports.getStats = async (req, res, next) => {
   try {
     const [totalUsers, totalNotes, totalPurchases, pendingRedemptions] =
@@ -35,7 +34,6 @@ exports.getStats = async (req, res, next) => {
   }
 };
 
-// ── All users ─────────────────────────────────────────────────────────────────
 exports.getAllUsers = async (req, res, next) => {
   try {
     const { page = 1, limit = 20, search } = req.query;
@@ -60,7 +58,6 @@ exports.getAllUsers = async (req, res, next) => {
   }
 };
 
-// ── All notes ─────────────────────────────────────────────────────────────────
 exports.getAllNotes = async (req, res, next) => {
   try {
     const { page = 1, limit = 20 } = req.query;
@@ -78,7 +75,6 @@ exports.getAllNotes = async (req, res, next) => {
   }
 };
 
-// ── Delete note ───────────────────────────────────────────────────────────────
 exports.deleteNote = async (req, res, next) => {
   try {
     await Note.findByIdAndUpdate(req.params.id, { isActive: false });
@@ -88,7 +84,6 @@ exports.deleteNote = async (req, res, next) => {
   }
 };
 
-// ── All purchases ─────────────────────────────────────────────────────────────
 exports.getAllPurchases = async (req, res, next) => {
   try {
     const { page = 1, limit = 20 } = req.query;
@@ -106,7 +101,6 @@ exports.getAllPurchases = async (req, res, next) => {
   }
 };
 
-// ── All redemption requests ───────────────────────────────────────────────────
 exports.getRedemptions = async (req, res, next) => {
   try {
     const { status, page = 1, limit = 20 } = req.query;
@@ -124,7 +118,6 @@ exports.getRedemptions = async (req, res, next) => {
   }
 };
 
-// ── Approve redemption ────────────────────────────────────────────────────────
 exports.approveRedemption = async (req, res, next) => {
   try {
     const redemption = await RedemptionRequest.findById(req.params.id).populate("user", "userName email");
@@ -138,12 +131,10 @@ exports.approveRedemption = async (req, res, next) => {
     redemption.adminNote = req.body.adminNote || "Payment processed";
     await redemption.save();
 
-    // Update user wallet
     await User.findByIdAndUpdate(redemption.user._id, {
       $inc: { "wallet.totalRedeemed": redemption.amount },
     });
 
-    // Log wallet transaction
     const user = await User.findById(redemption.user._id).select("wallet");
     await WalletTransaction.create({
       user: redemption.user._id,
@@ -154,7 +145,6 @@ exports.approveRedemption = async (req, res, next) => {
       balanceAfter: user.wallet.balance,
     });
 
-    // Notify user
     await Notification.create({
       user: redemption.user._id,
       title: "Payout Processed!",
@@ -168,7 +158,6 @@ exports.approveRedemption = async (req, res, next) => {
   }
 };
 
-// ── Reject redemption ─────────────────────────────────────────────────────────
 exports.rejectRedemption = async (req, res, next) => {
   try {
     const redemption = await RedemptionRequest.findById(req.params.id).populate("user");
@@ -182,7 +171,6 @@ exports.rejectRedemption = async (req, res, next) => {
     redemption.adminNote = req.body.adminNote || "Rejected by admin";
     await redemption.save();
 
-    // Refund balance back to user
     await User.findByIdAndUpdate(redemption.user._id, {
       $inc: { "wallet.balance": redemption.amount },
     });
@@ -197,7 +185,6 @@ exports.rejectRedemption = async (req, res, next) => {
       balanceAfter: user.wallet.balance,
     });
 
-    // Notify user
     await Notification.create({
       user: redemption.user._id,
       title: "Payout Rejected",

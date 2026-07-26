@@ -1,6 +1,6 @@
 import API from "./axios";
 
-// ── Auth ──────────────────────────────────────────────────────────────────────
+// Auth
 
 export const signUp = async (formData) => {
   const res = await API.post("/auth/sign-up", formData);
@@ -32,7 +32,7 @@ export const updateProfile = async (data) => {
   return res.data;
 };
 
-// ── Notes ─────────────────────────────────────────────────────────────────────
+// Notes
 
 export const uploadNote = async (formData) => {
   const res = await API.post("/notes", formData, {
@@ -66,7 +66,7 @@ export const getNoteFileUrl = async (id) => {
   return res.data;
 };
 
-// ── Payment ───────────────────────────────────────────────────────────────────
+// Payment
 
 export const createOrder = async (noteId) => {
   const res = await API.post("/payment/create-order", { noteId });
@@ -83,7 +83,7 @@ export const claimFreeNote = async (noteId) => {
   return res.data;
 };
 
-// ── Purchases ─────────────────────────────────────────────────────────────────
+// Purchases
 
 export const getMyPurchases = async () => {
   const res = await API.get("/purchases");
@@ -95,7 +95,7 @@ export const checkPurchase = async (noteId) => {
   return res.data;
 };
 
-// ── Wallet ────────────────────────────────────────────────────────────────────
+// Wallet
 
 export const getWallet = async () => {
   const res = await API.get("/wallet");
@@ -117,7 +117,7 @@ export const getMyRedemptions = async () => {
   return res.data;
 };
 
-// ── Notifications ─────────────────────────────────────────────────────────────
+// Notifications
 
 export const getNotifications = async () => {
   const res = await API.get("/notifications");
@@ -134,7 +134,7 @@ export const markAllNotificationsRead = async () => {
   return res.data;
 };
 
-// ── Admin ─────────────────────────────────────────────────────────────────────
+// Admin 
 export const getAdminStats = async () => {
   const res = await API.get("/admin/stats");
   return res.data;

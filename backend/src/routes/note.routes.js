@@ -12,9 +12,8 @@ const {
 const { authMiddleware } = require("../middlewares/auth.middleware");
 const { validateNoteUpload } = require("../validators/note.validator");
 
-// ⚠️ Static routes MUST come before /:id
 router.get("/", getAllNotesController);
-router.get("/my", authMiddleware, getMyNotesController);       // ← before /:id
+router.get("/my", authMiddleware, getMyNotesController);    
 router.get("/:id", getNoteByIdController);
 router.get("/:id/file", authMiddleware, getFileUrlController);
 

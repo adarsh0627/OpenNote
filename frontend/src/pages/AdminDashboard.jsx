@@ -180,7 +180,6 @@ const AdminDashboard = () => {
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-6">
 
-        {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <button onClick={() => navigate("/")} className="text-gray-400 hover:text-gray-600">
@@ -201,7 +200,6 @@ const AdminDashboard = () => {
           </button>
         </div>
 
-        {/* Tab nav — scrollable on mobile */}
         <div className="flex gap-1 bg-white border border-gray-200 p-1 rounded-xl mb-6 overflow-x-auto">
           {tabs.map((t) => (
             <button
@@ -222,7 +220,6 @@ const AdminDashboard = () => {
           ))}
         </div>
 
-        {/* ── Overview ── */}
         {activeTab === TAB_OVERVIEW && (
           loading
             ? <div className="flex justify-center py-24"><Spinner size="lg" /></div>
@@ -245,7 +242,6 @@ const AdminDashboard = () => {
               </div>
         )}
 
-        {/* ── Redemptions ── */}
         {activeTab === TAB_REDEMPTIONS && (
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
             <div className="p-4 border-b border-gray-100 flex gap-2 flex-wrap">
@@ -270,7 +266,6 @@ const AdminDashboard = () => {
                   <p>No redemption requests</p>
                 </div>
               : <>
-                  {/* Desktop table */}
                   <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead className="bg-gray-50 text-gray-500 text-xs uppercase">
@@ -317,7 +312,6 @@ const AdminDashboard = () => {
                     </table>
                   </div>
 
-                  {/* Mobile cards */}
                   <div className="md:hidden divide-y divide-gray-100">
                     {redemptions.map((r) => (
                       <div key={r._id} className="p-4 space-y-2">
@@ -357,7 +351,6 @@ const AdminDashboard = () => {
           </div>
         )}
 
-        {/* ── Users ── */}
         {activeTab === TAB_USERS && (
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
             <div className="p-4 border-b border-gray-100 flex gap-2">
@@ -380,7 +373,6 @@ const AdminDashboard = () => {
             {loading
               ? <div className="flex justify-center py-12"><Spinner /></div>
               : <>
-                  {/* Desktop */}
                   <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead className="bg-gray-50 text-gray-500 text-xs uppercase">
@@ -408,7 +400,6 @@ const AdminDashboard = () => {
                       </tbody>
                     </table>
                   </div>
-                  {/* Mobile cards */}
                   <div className="md:hidden divide-y divide-gray-100">
                     {users.map((u) => (
                       <div key={u._id} className="p-4 space-y-1">
@@ -427,13 +418,11 @@ const AdminDashboard = () => {
           </div>
         )}
 
-        {/* ── Notes ── */}
         {activeTab === TAB_NOTES && (
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
             {loading
               ? <div className="flex justify-center py-12"><Spinner /></div>
               : <>
-                  {/* Desktop */}
                   <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead className="bg-gray-50 text-gray-500 text-xs uppercase">
@@ -478,7 +467,6 @@ const AdminDashboard = () => {
                       </tbody>
                     </table>
                   </div>
-                  {/* Mobile cards */}
                   <div className="md:hidden divide-y divide-gray-100">
                     {notes.map((n) => (
                       <div key={n._id} className="p-4 flex gap-3">
@@ -506,14 +494,11 @@ const AdminDashboard = () => {
             }
           </div>
         )}
-
-        {/* ── Purchases ── */}
         {activeTab === TAB_PURCHASES && (
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
             {loading
               ? <div className="flex justify-center py-12"><Spinner /></div>
               : <>
-                  {/* Desktop */}
                   <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead className="bg-gray-50 text-gray-500 text-xs uppercase">
@@ -545,7 +530,6 @@ const AdminDashboard = () => {
                       </tbody>
                     </table>
                   </div>
-                  {/* Mobile cards */}
                   <div className="md:hidden divide-y divide-gray-100">
                     {purchases.map((p) => (
                       <div key={p._id} className="p-4 space-y-1">
@@ -571,7 +555,6 @@ const AdminDashboard = () => {
         )}
       </div>
 
-      {/* Reject Modal */}
       {rejectModal && (
         <>
           <div className="fixed inset-0 bg-black/40 z-50" onClick={() => setRejectModal(null)} />

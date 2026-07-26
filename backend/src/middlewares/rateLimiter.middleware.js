@@ -1,8 +1,7 @@
 const rateLimit = require("express-rate-limit");
 
-// Strict limiter for auth routes
 exports.authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 15 * 60 * 1000, 
   max: 10,
   message: {
     success: false,
@@ -12,7 +11,6 @@ exports.authLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// General API limiter
 exports.apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 200,
@@ -24,9 +22,8 @@ exports.apiLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// Strict limiter for payment routes
 exports.paymentLimiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
+  windowMs: 60 * 1000, 
   max: 5,
   message: {
     success: false,

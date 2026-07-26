@@ -7,7 +7,6 @@ const storage = new CloudinaryStorage({
   params: async (req, file) => {
     const isPdf = file.mimetype === "application/pdf";
 
-    // Sanitize filename — replace spaces, commas and special chars with underscores
     const safeName = file.originalname
       .replace(/[^a-zA-Z0-9._-]/g, "_")
       .replace(/_+/g, "_");

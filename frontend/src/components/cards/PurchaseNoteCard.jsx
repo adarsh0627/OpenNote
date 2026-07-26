@@ -6,8 +6,6 @@ import toast from "react-hot-toast";
 const PurchasedNoteCard = ({ note }) => {
   const [loading, setLoading] = useState(false);
 
-  // Fetches a fresh signed URL (valid 5 min) every time user clicks
-  // This prevents sharing static links
   const handleOpen = async () => {
     if (!note?._id) return;
     setLoading(true);

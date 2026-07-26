@@ -8,7 +8,6 @@ const Notification = require("../models/notification.model");
 
 const COMMISSION_PERCENT = parseFloat(process.env.PLATFORM_COMMISSION || "20");
 
-// ── Free note claim ───────────────────────────────────────────────────────────
 exports.claimFreeNote = async (noteId, userId) => {
   const note = await Note.findOne({ _id: noteId, isActive: true });
   if (!note) throw new Error("Note not found");
@@ -46,7 +45,6 @@ exports.claimFreeNote = async (noteId, userId) => {
   return purchase;
 };
 
-// ── Create Razorpay order ─────────────────────────────────────────────────────
 exports.createOrder = async (noteId, userId) => {
   try {
     const note = await Note.findOne({ _id: noteId, isActive: true });
@@ -78,7 +76,6 @@ exports.createOrder = async (noteId, userId) => {
   }
 };
 
-// ── Verify payment and credit seller wallet ───────────────────────────────────
 exports.verifyAndSavePurchase = async ({
   razorpay_order_id,
   razorpay_payment_id,
@@ -86,7 +83,7 @@ exports.verifyAndSavePurchase = async ({
   noteId,
   userId,
 }) => {
-  // 1. Verify signature
+  
   const body = razorpay_order_id + "|" + razorpay_payment_id;
   const expectedSignature = crypto
     .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
@@ -97,27 +94,26 @@ exports.verifyAndSavePurchase = async ({
     throw new Error("Payment verification failed — signature mismatch");
   }
 
-  // 2. Load note
+  
   const note = await Note.findOne({ _id: noteId, isActive: true });
   if (!note) throw new Error("Note not found");
 
-  // 3. Prevent buying own note
   if (note.uploadedBy.toString() === userId.toString()) {
     throw new Error("You cannot purchase your own note");
   }
 
-  // 4. Prevent duplicate
+  // Prevent duplicate
   const existing = await Purchase.findOne({ user: userId, note: noteId });
   if (existing) throw new Error("You have already purchased this note");
 
-  // 5. Calculate commission split
+  // Calculate commission split
   const totalAmount = note.price;
   const platformAmount = parseFloat(
     ((totalAmount * COMMISSION_PERCENT) / 100).toFixed(2)
   );
   const sellerAmount = parseFloat((totalAmount - platformAmount).toFixed(2));
 
-  // 6. Save purchase
+  // Save purchase
   const purchase = await Purchase.create({
     user: userId,
     note: noteId,
@@ -130,7 +126,6 @@ exports.verifyAndSavePurchase = async ({
     status: "SUCCESS",
   });
 
-  // 7. Credit seller wallet
   const seller = await User.findByIdAndUpdate(
     note.uploadedBy,
     {
@@ -142,7 +137,6 @@ exports.verifyAndSavePurchase = async ({
     { new: true }
   );
 
-  // 8. Log wallet transaction
   await WalletTransaction.create({
     user: note.uploadedBy,
     type: "CREDIT",
@@ -152,12 +146,10 @@ exports.verifyAndSavePurchase = async ({
     balanceAfter: seller.wallet.balance,
   });
 
-  // 9. Update note stats
   await Note.findByIdAndUpdate(noteId, {
     $inc: { totalSales: 1, totalRevenue: totalAmount },
   });
 
-  // 10. Notify buyer
   await Notification.create({
     user: userId,
     title: "Purchase Successful",
@@ -166,7 +158,6 @@ exports.verifyAndSavePurchase = async ({
     data: { noteId },
   });
 
-  // 11. Notify seller
   await Notification.create({
     user: note.uploadedBy,
     title: "New Sale!",

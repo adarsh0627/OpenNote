@@ -176,7 +176,6 @@ const Dashboard = () => {
           ))}
         </div>
 
-        {/* ── Profile Tab ─────────────────────────────────────────────────── */}
         {activeTab === TAB_PROFILE && (
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
             <h2 className="font-semibold text-gray-800 mb-4">Profile Info</h2>
@@ -200,14 +199,12 @@ const Dashboard = () => {
           </div>
         )}
 
-        {/* ── Wallet Tab ──────────────────────────────────────────────────── */}
         {activeTab === TAB_WALLET && (
           <div className="flex flex-col gap-6">
             {walletLoading ? (
               <div className="flex justify-center py-12"><Spinner /></div>
             ) : (
               <>
-                {/* Stats */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {[
                     { label: "Available Balance", value: `₹${wallet?.balance?.toFixed(2) || "0.00"}`, color: "text-indigo-600", icon: <Wallet size={18} /> },
@@ -224,7 +221,6 @@ const Dashboard = () => {
                   ))}
                 </div>
 
-                {/* Redeem */}
                 <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                   <h2 className="font-semibold text-gray-800 mb-4">Request Payout</h2>
                   <form onSubmit={handleRedeem} className="flex flex-col gap-4 max-w-sm">
@@ -261,7 +257,6 @@ const Dashboard = () => {
                   </form>
                 </div>
 
-                {/* Payment Details */}
                 <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                   <h2 className="font-semibold text-gray-800 mb-4">Payment Details</h2>
                   <form onSubmit={savePaymentDetails} className="flex flex-col gap-4 max-w-sm">
@@ -296,7 +291,6 @@ const Dashboard = () => {
                   </form>
                 </div>
 
-                {/* Recent Transactions */}
                 {transactions.length > 0 && (
                   <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                     <h2 className="font-semibold text-gray-800 mb-4">Recent Transactions</h2>
@@ -316,7 +310,6 @@ const Dashboard = () => {
                   </div>
                 )}
 
-                {/* Redemption history */}
                 {redemptions.length > 0 && (
                   <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                     <h2 className="font-semibold text-gray-800 mb-4">Redemption Requests</h2>
@@ -338,7 +331,6 @@ const Dashboard = () => {
           </div>
         )}
 
-        {/* ── My Uploads Tab ──────────────────────────────────────────────── */}
         {activeTab === TAB_NOTES && (
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
             <h2 className="font-semibold text-gray-800 mb-4">My Uploaded Notes</h2>

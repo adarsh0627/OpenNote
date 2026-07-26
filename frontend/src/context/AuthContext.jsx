@@ -10,7 +10,6 @@ export const AuthProvider = ({ children }) => {
 
   const isAuthenticated = Boolean(user);
 
-  // Restore session on mount
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
@@ -55,7 +54,6 @@ export const AuthProvider = ({ children }) => {
       const refreshToken = localStorage.getItem("refreshToken");
       if (refreshToken) await logoutAPI(refreshToken);
     } catch {
-      // ignore
     } finally {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");

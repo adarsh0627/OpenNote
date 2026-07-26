@@ -8,7 +8,7 @@ const generateSignedUrl = (publicId, resourceType = "raw", expiresIn = 300) => {
 
   const url = cloudinary.url(publicId, {
     resource_type: resourceType,
-    type: "private", // files are uploaded with type:"private" — must match here
+    type: "private",
     sign_url: true,
     secure: true,
     expires_at: expireAt,
@@ -17,7 +17,6 @@ const generateSignedUrl = (publicId, resourceType = "raw", expiresIn = 300) => {
   return url;
 };
 
-// ── Create note ───────────────────────────────────────────────────────────────
 exports.createNote = async ({
   title, description, tags, price,
   filePublicId, fileResourceType, thumbnailUrl, subject, userId,
@@ -40,7 +39,7 @@ exports.createNote = async ({
   });
 };
 
-// ── Get all notes ─────────────────────────────────────────────────────────────
+
 exports.getAllNotes = async ({ search, tag, minPrice, maxPrice, page = 1, limit = 20 }) => {
   const query = { isActive: true };
 
@@ -69,14 +68,12 @@ exports.getAllNotes = async ({ search, tag, minPrice, maxPrice, page = 1, limit 
   return { notes, total, page: Number(page), pages: Math.ceil(total / limit) };
 };
 
-// ── Get note by ID ────────────────────────────────────────────────────────────
 exports.getNoteById = async (noteId) => {
   return Note.findOne({ _id: noteId, isActive: true })
     .populate("uploadedBy", "userName avatar education")
     .select("-filePublicId -fileResourceType");
 };
 
-// ── Get secure file URL ───────────────────────────────────────────────────────
 exports.getSecureFileUrl = async (noteId, userId) => {
   const note = await Note.findOne({ _id: noteId, isActive: true })
     .select("+filePublicId +fileResourceType");
@@ -98,14 +95,12 @@ exports.getSecureFileUrl = async (noteId, userId) => {
   return { url, expiresIn: 300 };
 };
 
-// ── Get user's own notes ──────────────────────────────────────────────────────
 exports.getUserNotes = async (userId) => {
   return Note.find({ uploadedBy: userId, isActive: true })
     .sort({ createdAt: -1 })
     .select("-filePublicId -fileResourceType");
 };
 
-// ── Soft delete note ──────────────────────────────────────────────────────────
 exports.deleteNote = async (noteId, userId) => {
   const note = await Note.findOne({ _id: noteId, uploadedBy: userId });
   if (!note) throw new Error("Note not found or unauthorized");

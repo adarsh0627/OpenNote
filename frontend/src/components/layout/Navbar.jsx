@@ -13,7 +13,6 @@ const Navbar = () => {
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
-  // Fetch unread count on mount and every 30 seconds
   useEffect(() => {
     if (!isAuthenticated) return;
 
@@ -22,7 +21,6 @@ const Navbar = () => {
         const data = await getNotifications();
         setUnreadCount(data.unreadCount || 0);
       } catch {
-        // silently fail
       }
     };
 
@@ -84,7 +82,6 @@ const Navbar = () => {
           </NavLink>
         </ul>
 
-        {/* RIGHT: Desktop Icons */}
         <div className="hidden md:flex items-center gap-6 text-gray-700">
           {isAuthenticated ? (
             <>
@@ -92,7 +89,6 @@ const Navbar = () => {
                 <User className="hover:text-indigo-600 transition" />
               </NavLink>
 
-              {/* Bell with unread badge */}
               <button onClick={handleOpenSidebar} className="relative">
                 <Bell className="hover:text-indigo-600 transition" />
                 {unreadCount > 0 && (
@@ -118,7 +114,6 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* MOBILE: Bell + Hamburger */}
         <div className="flex md:hidden items-center gap-4 ml-auto text-gray-700">
           {isAuthenticated && (
             <button onClick={handleOpenSidebar} className="relative">
@@ -137,7 +132,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* MOBILE MENU */}
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white border-b border-gray-200 px-4 py-4 flex flex-col gap-3">
           <NavLink
@@ -156,7 +150,6 @@ const Navbar = () => {
             Upload
           </NavLink>
 
-          {/* ← My Purchases now visible in mobile menu */}
           <NavLink
             to="/purchases"
             onClick={() => setIsMobileMenuOpen(false)}
@@ -207,7 +200,6 @@ const Navbar = () => {
         </div>
       )}
 
-      {/* NOTIFICATION SIDEBAR */}
       {isAuthenticated && isSidebarOpen && (
         <NotificationSidebar
           closePanelHandler={() => setIsSidebarOpen(false)}
